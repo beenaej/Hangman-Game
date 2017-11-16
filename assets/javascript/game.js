@@ -1,13 +1,18 @@
 //Global variables
 //**************************************************************
 // Create an array of words
-const word = ["red", "blue", "brown", "black", "pink", "purple", "white"];
+const word = ["red", "blue", "brown", "black", "pink", "white", "violet", 
+"apricot", "silver", "cyan", "orange", "teal", "gray", "gold", "azure", "blond", 
+"bronze", "ivory", "mint", "mustard", "amber", "cobalt", "coral", "cream", "crimson", "fuchsia", 
+"lavender", "mauve", "olive", "rust", "tan"];
 // Choose word randomly
 var randNum = Math.floor(Math.random() * word.length);
 var chosenWord = word[randNum];
-var rightWord = [];
-var wrongWord= [];
+var rightLetter = [];
+var wrongLetter= [];
 var underScore = [];
+var Wins = 0;
+var Losses = 0;
 
 //DOM Manipulation
 var docUnderScore = document.getElementsByClassName('underscore');
@@ -18,7 +23,7 @@ var docWrongGuess = document.getElementsByClassName('wrongGuess');
 console.log(chosenWord);
 //Create underscores based on length of word
 
-var generateUnderScore = () => {
+function generateUnderScore() {
     for(var i = 0; i < chosenWord.length; i++){
         underScore.push('_');
         
@@ -27,26 +32,32 @@ var generateUnderScore = () => {
 }
 
 
+
 // Get users guess
 document.addEventListener('keypress', (event) => {
-        var keyWord = String.fromCharCode(event.keyCode);
+        var userLetter = String.fromCharCode(event.keyCode);
 // if user guess is right
-        if (chosenWord.indexOf(keyWord) > -1) {
+        if (chosenWord.indexOf(userLetter) > -1) {
         //add to the right word array
-        rightWord.push(keyWord);
+        rightLetter.push(userLetter);
         //replace underscore with right letter
-        underScore[chosenWord.indexOf(keyWord)] = keyWord;
+        underScore[chosenWord.indexOf(userLetter)] = userLetter;
         docUnderScore[0].innerHTML = underScore.join('');
-        docRightGuess[0].innerHTML = rightWord;
+        docRightGuess[0].innerHTML = rightLetter;
+        Wins++;
+        document.getElementById("wins").innerHTML = Wins;
                 
         //check to see if user word matches guesses
         if(underScore.join('') == chosenWord) {
-            alert('You Win');
+            alert("YAYY! YOU WIN!!");
         }
         } else {
-        wrongWord.push(keyWord);
-        docWrongGuess[0].innerHTML = wrongWord;
+        wrongLetter.push(userLetter);
+        Losses++;
+        document.getElementById("losses").innerHTML = Losses;
+        docWrongGuess[0].innerHTML = wrongLetter;
         }
+
 });
 
 
